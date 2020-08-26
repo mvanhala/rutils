@@ -1,0 +1,2 @@
+# rutils
+Useful R functions
