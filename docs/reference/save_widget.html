@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • rutils</title>
+<title>Save htmlwidgets to an html file — save_widget • rutils</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -36,7 +36,11 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Save htmlwidgets to an html file — save_widget" />
+
+<meta property="og:description" content="Convenience wrapper around saveWidget" />
+
+
 
 
 
@@ -54,7 +58,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -102,60 +106,81 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Save htmlwidgets to an html file</h1>
+    <small class="dont-index">Source: <a href='https://github.com/mvanhala/rutils/blob/master/R/save_htmlwidget.R'><code>R/save_htmlwidget.R</code></a></small>
+    <div class="hidden name"><code>save_widget.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>Convenience wrapper around <code><a href='https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html'>saveWidget</a></code></p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="desc_pkgs.html">desc_pkgs()</a></code> </p>
-        </td>
-        <td><p>Update DESCRIPTION file with package dependencies</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="desc_rewrite.html">desc_rewrite()</a></code> </p>
-        </td>
-        <td><p>Rewrite DESCRIPTION file</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="render_doc.html">render_doc()</a></code> </p>
-        </td>
-        <td><p>Render an R Markdown document</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="save_widget.html">save_widget()</a></code> </p>
-        </td>
-        <td><p>Save htmlwidgets to an html file</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='fu'>save_widget</span>(
+  <span class='no'>widget</span>,
+  <span class='no'>path</span>,
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>widget</span>)<span class='kw'>[[</span><span class='fl'>1</span>]],
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"direct"</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>libdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>libpath</span> <span class='kw'>=</span> <span class='st'>"relative"</span>
+)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>widget</th>
+      <td><p>htmlwidget</p></td>
+    </tr>
+    <tr>
+      <th>path</th>
+      <td><p>Where to save HTMLf ile</p></td>
+    </tr>
+    <tr>
+      <th>title</th>
+      <td><p>Title of HTML page</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>One of <code>"direct"</code>, <code>"lib"</code>, or <code>"intermediate"</code></p></td>
+    </tr>
+    <tr>
+      <th>libdir</th>
+      <td><p>Directory for HTML dependencies (if <code>type</code> is <code>"lib"</code>)</p></td>
+    </tr>
+    <tr>
+      <th>libpath</th>
+      <td><p>Specify <code>"relative"</code> or <code>"absolute"</code> HTML dependency paths
+(if <code>type</code> is <code>"lib"</code>)</p></td>
+    </tr>
     </table>
-  </div>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>There are three ways to save an htmlwidget. If <code>type</code> is <code>"direct"</code>,
+a self-contained HTML file is saved as usual. <code>save_widget</code> helps in this case
+due to an apparent bug in <code>saveWidget</code> if attempting to save to a directory
+other than the current working directory.</p>
+<p>If <code>type</code> is <code>"lib"</code>, a non-self-contained HTML file is created. In this
+case, <code>"libdir"</code> may be provided. Also, <code>"libpath"</code> may be provided as either
+<code>"relative"</code> (default) or <code>"absolute"</code>, which specifies whether paths
+in the html file to the library files are relative or absolute. In contrast to
+previous function <code>save_leaflet</code>, <code>"libdir"</code> does not necessarily need
+to be a child of the directory containing <code>path</code>.</p>
+<p>If <code>type</code> is <code>"intermediate"</code>, a self-contained HTML file is generated, but
+through an intermediate step of first creating a non-self-contained HTML file, then
+producing the self-contained file from this by writing a new HTML after copying the
+HTML dependencies into the HTML file. This can be useful when saving large htmlwidgets,
+as the attempt to save as a self-contained file using <code>saveWidget</code> will
+fail on a pandoc memory error. This approach enables the saving of larger
+widgets as self-contained HTML files.</p>
+    
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
