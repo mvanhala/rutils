@@ -13,5 +13,5 @@ desc_rewrite(file = "DESCRIPTION", dir = ".")
 }
 \description{
 Wrapper to normalize the DESCRIPTION file in a package by invoking
-the functions in \code{\link[desc]{description}}
+the functions in \link[desc:description]{desc::description}
 }

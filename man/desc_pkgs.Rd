@@ -28,7 +28,7 @@ desc_pkgs(
 }
 \description{
 \code{desc_pkgs} will search code in a package for dependencies,
-using both \code{renv::dependencies} to search R and RMD files,
+using both \link[renv:dependencies]{renv::dependencies} to search R and RMD files,
 and by detecting dependencies declared with \code{roxygen2} decorators.
 It will write these
 package dependencies to the DESCRIPTION file.

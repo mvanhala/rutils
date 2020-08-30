@@ -1,8 +1,8 @@
 #' Update DESCRIPTION file with package dependencies
 #'
-#' \code{desc_pkgs} will search code in a package for dependencies,
-#' using both \code{renv::dependencies} to search R and RMD files,
-#' and by detecting dependencies declared with \code{roxygen2} decorators.
+#' `desc_pkgs` will search code in a package for dependencies,
+#' using both [renv::dependencies] to search R and RMD files,
+#' and by detecting dependencies declared with `roxygen2` decorators.
 #' It will write these
 #' package dependencies to the DESCRIPTION file.
 #'
@@ -11,7 +11,7 @@
 #' @param suggests Path(s) to search for dependencies to put in SUGGESTS (supports regular expressions)
 #' @param ignore Path(s) to ignore in getting dependencies (supports regular expressions)
 #' @param must_keep List of packages that must be retained even if not a current dependency
-#' @param quiet Whether to print messages when \code{renv::dependencies} is called
+#' @param quiet Whether to print messages when `renv::dependencies` is called
 #' @export
 desc_pkgs <- function(dir = ".",
                       file = "DESCRIPTION",
@@ -99,7 +99,7 @@ desc_pkgs <- function(dir = ".",
 #' Rewrite DESCRIPTION file
 #'
 #' Wrapper to normalize the DESCRIPTION file in a package by invoking
-#' the functions in \code{\link[desc]{description}}
+#' the functions in [desc::description]
 #'
 #' @param file Name of the description file
 #' @param dir Root package directory

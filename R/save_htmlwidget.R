@@ -1,37 +1,41 @@
 #' Save htmlwidgets to an html file
 #'
-#' Convenience wrapper around \code{\link[htmlwidgets]{saveWidget}}
+#' Convenience wrapper around [htmlwidgets::saveWidget]
 #'
-#' There are three ways to save an htmlwidget. If \code{type} is \code{"direct"},
-#' a self-contained HTML file is saved as usual. \code{save_widget} helps in this case
-#' due to an apparent bug in \code{saveWidget} if attempting to save to a directory
+#' There are three ways to save an htmlwidget. If `type` is `"direct"`,
+#' a self-contained HTML file is saved as usual. `save_widget` helps in this case
+#' due to an apparent bug in `saveWidget` if attempting to save to a directory
 #' other than the current working directory.
 #'
-#' If \code{type} is \code{"lib"}, a non-self-contained HTML file is created. In this
-#' case, \code{"libdir"} may be provided. Also, \code{"libpath"} may be provided as either
-#' \code{"relative"} (default) or \code{"absolute"}, which specifies whether paths
+#' If `type` is `"lib"`, a non-self-contained HTML file is created. In this
+#' case, `"libdir"` may be provided. Also, `"libpath"` may be provided as either
+#' `"relative"` (default) or `"absolute"`, which specifies whether paths
 #' in the html file to the library files are relative or absolute. In contrast to
-#' previous function \code{save_leaflet}, \code{"libdir"} does not necessarily need
-#' to be a child of the directory containing \code{path}.
+#' previous function `save_leaflet`, `"libdir"` does not necessarily need
+#' to be a child of the directory containing `path`.
 #'
-#' If \code{type} is \code{"intermediate"}, a self-contained HTML file is generated, but
+#' If `type` is `"intermediate"`, a self-contained HTML file is generated, but
 #' through an intermediate step of first creating a non-self-contained HTML file, then
 #' producing the self-contained file from this by writing a new HTML after copying the
 #' HTML dependencies into the HTML file. This can be useful when saving large htmlwidgets,
-#' as the attempt to save as a self-contained file using \code{saveWidget} will
+#' as the attempt to save as a self-contained file using `saveWidget` will
 #' fail on a pandoc memory error. This approach enables the saving of larger
 #' widgets as self-contained HTML files.
 #'
 #' @param widget htmlwidget
-#' @param path Where to save HTMLf ile
+#' @param path Where to save HTML file
 #' @param title Title of HTML page
-#' @param type One of \code{"direct"}, \code{"lib"}, or \code{"intermediate"}
-#' @param libdir Directory for HTML dependencies (if \code{type} is \code{"lib"})
-#' @param libpath Specify \code{"relative"} or \code{"absolute"} HTML dependency paths
-#' (if \code{type} is \code{"lib"})
+#' @param type One of `"direct"`, `"lib"`, or `"intermediate"`
+#' @param libdir Directory for HTML dependencies (if `type` is `"lib"`)
+#' @param libpath Specify `"relative"` or `"absolute"` HTML dependency paths
+#' (if `type` is `"lib"`)
 #' @export
-save_widget <- function(widget, path, title = class(widget)[[1]], type = "direct", ...,
-                        libdir = NULL, libpath = "relative") {
+save_widget <- function(widget,
+                        path,
+                        title = class(widget)[[1]],
+                        type = "direct", ...,
+                        libdir = NULL,
+                        libpath = "relative") {
   path <- fs::path_abs(path)
   dir <- fs::path_dir(path)
   file <- fs::path_file(path)

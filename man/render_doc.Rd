@@ -25,9 +25,9 @@ render_doc(
 
 \item{params}{Parameters in the R Markdown document to execute}
 
-\item{open}{Whether to open the output document using \code{\link[rstudioapi]{viewer}}}
+\item{open}{Whether to open the output document using \link[rstudioapi:viewer]{rstudioapi::viewer}}
 
-\item{...}{Additional arguments passed to \code{\link[rmarkdown]{render}}}
+\item{...}{Additional arguments passed to \link[rmarkdown:render]{rmarkdown::render}}
 }
 \description{
 \code{render_doc} renders an R Markdown in a fresh R process using

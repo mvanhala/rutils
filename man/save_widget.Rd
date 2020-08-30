@@ -17,7 +17,7 @@ save_widget(
 \arguments{
 \item{widget}{htmlwidget}
 
-\item{path}{Where to save HTMLf ile}
+\item{path}{Where to save HTML file}
 
 \item{title}{Title of HTML page}
 
@@ -29,7 +29,7 @@ save_widget(
 (if \code{type} is \code{"lib"})}
 }
 \description{
-Convenience wrapper around \code{\link[htmlwidgets]{saveWidget}}
+Convenience wrapper around \link[htmlwidgets:saveWidget]{htmlwidgets::saveWidget}
 }
 \details{
 There are three ways to save an htmlwidget. If \code{type} is \code{"direct"},
