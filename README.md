@@ -12,17 +12,17 @@ This packages contains a collection of helpful utility functions.
 
 Examples include:
 
-* Rendering R Markdown documents in a clean [`callr`](https://github.com/r-lib/callr) session (`render_doc`).
+* `render_doc()`: Rendering R Markdown documents in a clean [`callr`](https://github.com/r-lib/callr) session.
 
-* More flexible ways to save htmlwidgets (`save_widget`).
+* `save_widget()`: More flexible ways to save htmlwidgets.
 
-* Detecting dependencies in a packages and adding them to the DESCRIPTION
-file (`desc_pkgs`).
+* `desc_pkgs()`: Detecting dependencies in a packages and adding them to the DESCRIPTION
+file.
 
-* A wrapper for around functions in [`desc`](https://github.com/r-lib/desc) 
+* `desc_rewrite()`: A wrapper for around functions in [`desc`](https://github.com/r-lib/desc) 
 to standardize and rewrite the DESCRIPTION file of a package.
 
-* A function for modifying the elements of a list by name (`list_edit`). This
-function is inspired by `purrr::list_modify`, but only works on the top level of a list
+* `list_edit()`: A function for modifying the elements of a list by name. This
+function is inspired by `purrr::list_modify()`, but only works on the top level of a list
 rather than recursively.
 
