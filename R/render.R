@@ -30,7 +30,7 @@ render_doc <- function(input,
                        output_basedir = fs::path(rprojroot::find_rstudio_root_file(), "docs"),
                        output_file = fs::path_ext_set(fs::path_file(input), "html"),
                        params = NULL,
-                       open = TRUE,
+                       open = FALSE,
                        ...) {
   checkmate::assert_file_exists(input)
   checkmate::assert_directory_exists(input_basedir)
