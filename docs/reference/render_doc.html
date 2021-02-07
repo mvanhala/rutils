@@ -124,10 +124,10 @@ callr" />
     <pre class="usage"><span class='fu'>render_doc</span>(
   <span class='no'>input</span>,
   <span class='kw'>input_basedir</span> <span class='kw'>=</span> <span class='kw pkg'>fs</span><span class='kw ns'>::</span><span class='fu'><a href='http://fs.r-lib.org/reference/path.html'>path</a></span>(<span class='kw pkg'>rprojroot</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rprojroot/man/find_root_file.html'>find_rstudio_root_file</a></span>(), <span class='st'>"code"</span>),
-  <span class='kw'>output_basedir</span> <span class='kw'>=</span> <span class='kw pkg'>fs</span><span class='kw ns'>::</span><span class='fu'><a href='http://fs.r-lib.org/reference/path.html'>path</a></span>(<span class='kw pkg'>rprojroot</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rprojroot/man/find_root_file.html'>find_rstudio_root_file</a></span>(), <span class='st'>"docs"</span>),
+  <span class='kw'>output_basedir</span> <span class='kw'>=</span> <span class='st'>"gitlab"</span>,
   <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='kw pkg'>fs</span><span class='kw ns'>::</span><span class='fu'><a href='http://fs.r-lib.org/reference/path_file.html'>path_ext_set</a></span>(<span class='kw pkg'>fs</span><span class='kw ns'>::</span><span class='fu'><a href='http://fs.r-lib.org/reference/path_file.html'>path_file</a></span>(<span class='no'>input</span>), <span class='st'>"html"</span>),
   <span class='kw'>params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>open</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>open</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )</pre>
     
@@ -144,7 +144,8 @@ callr" />
     </tr>
     <tr>
       <th>output_basedir</th>
-      <td><p>Base output directory (<code>docs</code> by default)</p></td>
+      <td><p>Base output directory. Can also specify <code>GitHub</code> or <code>GitLab</code>, in which case
+the folder will be the <code>docs</code> or <code>public</code> directory, respectively.</p></td>
     </tr>
     <tr>
       <th>output_file</th>

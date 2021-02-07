@@ -19,7 +19,8 @@
 #'
 #' @param input Input file
 #' @param input_basedir Base input directory (`code` by default)
-#' @param output_basedir Base output directory (`docs` by default)
+#' @param output_basedir Base output directory. Can also specify `GitHub` or `GitLab`, in which case
+#' the folder will be the `docs` or `public` directory, respectively.
 #' @param output_file Output filename
 #' @param params Parameters in the R Markdown document to execute
 #' @param open Whether to open the output document using [rstudioapi::viewer]
@@ -27,7 +28,7 @@
 #' @export
 render_doc <- function(input,
                        input_basedir = fs::path(rprojroot::find_rstudio_root_file(), "code"),
-                       output_basedir = fs::path(rprojroot::find_rstudio_root_file(), "public"),
+                       output_basedir = "gitlab",
                        output_file = fs::path_ext_set(fs::path_file(input), "html"),
                        params = NULL,
                        open = FALSE,
@@ -35,6 +36,14 @@ render_doc <- function(input,
   checkmate::assert_file_exists(input)
   checkmate::assert_directory_exists(input_basedir)
   checkmate::assert_flag(open)
+
+  if (tolower(output_basedir) == "github") {
+    output_basedir <- fs::path(rprojroot::find_rstudio_root_file(), "public")
+  }
+
+  if (tolower(output_basedir) == "gitlab") {
+    output_basedir <- fs::path(rprojroot::find_rstudio_root_file(), "docs")
+  }
 
   input <- path_reg(input)
   input_basedir <- path_reg(input_basedir)

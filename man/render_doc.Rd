@@ -7,7 +7,7 @@
 render_doc(
   input,
   input_basedir = fs::path(rprojroot::find_rstudio_root_file(), "code"),
-  output_basedir = fs::path(rprojroot::find_rstudio_root_file(), "public"),
+  output_basedir = "gitlab",
   output_file = fs::path_ext_set(fs::path_file(input), "html"),
   params = NULL,
   open = FALSE,
@@ -19,7 +19,8 @@ render_doc(
 
 \item{input_basedir}{Base input directory (\code{code} by default)}
 
-\item{output_basedir}{Base output directory (\code{docs} by default)}
+\item{output_basedir}{Base output directory. Can also specify \code{GitHub} or \code{GitLab}, in which case
+the folder will be the \code{docs} or \code{public} directory, respectively.}
 
 \item{output_file}{Output filename}
 
