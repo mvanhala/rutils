@@ -38,11 +38,11 @@ render_doc <- function(input,
   checkmate::assert_flag(open)
 
   if (tolower(output_basedir) == "github") {
-    output_basedir <- fs::path(rprojroot::find_rstudio_root_file(), "public")
+    output_basedir <- fs::path(rprojroot::find_rstudio_root_file(), "docs")
   }
 
   if (tolower(output_basedir) == "gitlab") {
-    output_basedir <- fs::path(rprojroot::find_rstudio_root_file(), "docs")
+    output_basedir <- fs::path(rprojroot::find_rstudio_root_file(), "public")
   }
 
   input <- path_reg(input)
