@@ -7,10 +7,10 @@
 render_doc(
   input,
   input_basedir = fs::path(rprojroot::find_rstudio_root_file(), "code"),
-  output_basedir = fs::path(rprojroot::find_rstudio_root_file(), "docs"),
+  output_basedir = fs::path(rprojroot::find_rstudio_root_file(), "public"),
   output_file = fs::path_ext_set(fs::path_file(input), "html"),
   params = NULL,
-  open = TRUE,
+  open = FALSE,
   ...
 )
 }
