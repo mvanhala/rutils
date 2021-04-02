@@ -9,6 +9,7 @@ render_doc(
   input_basedir = fs::path(rprojroot::find_rstudio_root_file(), "code"),
   output_basedir = "gitlab",
   output_file = fs::path_ext_set(fs::path_file(input), "html"),
+  output_dir = NULL,
   params = NULL,
   open = FALSE,
   ...
@@ -23,6 +24,9 @@ render_doc(
 the folder will be the \code{docs} or \code{public} directory, respectively.}
 
 \item{output_file}{Output filename}
+
+\item{output_dir}{Directly specify the output directory. If specified, takes precedence over
+\code{output_basedir}.}
 
 \item{params}{Parameters in the R Markdown document to execute}
 

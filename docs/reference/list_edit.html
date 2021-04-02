@@ -8,11 +8,13 @@
 
 <title>Edit a list — list_edit • rutils</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
@@ -36,10 +38,9 @@
 
 
 
+
 <meta property="og:title" content="Edit a list — list_edit" />
-
 <meta property="og:description" content="Edit the elements of a list by name" />
-
 
 
 
@@ -71,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rutils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -79,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -87,11 +88,10 @@
   <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mvanhala/rutils/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -114,13 +114,11 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Edit the elements of a list by name</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>list_edit</span>(<span class='no'>.l</span>, <span class='no'>...</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>list_edit</span><span class='op'>(</span><span class='va'>.l</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -133,17 +131,17 @@
       <td><p>Named elements to add or delete</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>list_edit</code> is similar to <a href='https://purrr.tidyverse.org/reference/list_modify.html'>purrr::list_modify</a> in
 <code>purrr</code>, but unlike <code>list_modify</code>, does not operate recursively
 on a list. It only edits elements at the top level of hierarchy.
 Elements can be removed by setting them equal to <code>NULL</code>.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>list_edit</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>20</span>)</div><div class='output co'>#&gt; $x
+    <pre class="examples"><div class='input'><span class='fu'>list_edit</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span>, y <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>, x <span class='op'>=</span> <span class='fl'>10</span>, z <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $x
 #&gt; [1] 10
 #&gt; 
 #&gt; $y
@@ -151,9 +149,11 @@ Elements can be removed by setting them equal to <code>NULL</code>.</p>
 #&gt; 
 #&gt; $z
 #&gt; [1] 20
-#&gt; </div><div class='input'><span class='fu'>list_edit</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; $y
+#&gt; </div><div class='input'><span class='fu'>list_edit</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span>, y <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>, x <span class='op'>=</span> <span class='cn'>NULL</span>, y <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $y
 #&gt; [1] 5
-#&gt; </div><div class='input'><span class='fu'>list_edit</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>2</span>), !!!<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>100</span>))</div><div class='output co'>#&gt; $y
+#&gt; </div><div class='input'><span class='fu'>list_edit</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span>, y <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>, <span class='op'>!</span><span class='op'>!</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='cn'>NULL</span>, z <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $y
 #&gt; [1] 2
 #&gt; 
 #&gt; $z
@@ -174,7 +174,7 @@ Elements can be removed by setting them equal to <code>NULL</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
