@@ -54,7 +54,10 @@ render_doc <- function(input,
   output_file <- fs::path_file(output_file)
 
   output_dir <- output_dir %||% fs::path(output_basedir, fs::path_rel(fs::path_dir(input), input_basedir))
-  output_dir <- path_reg(output_dir)
+  if (!identical(output_dir, fs::path_abs(output_dir))) {
+    output_dir <- fs::path(rprojroot::find_rstudio_root_file(), output_dir)
+  }
+
   fs::dir_create(output_dir)
   output_file <- fs::path(output_dir, output_file)
 
