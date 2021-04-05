@@ -1,16 +1,15 @@
 Package: rutils
 Title: Utility Functions
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: 
     person(given = "Matthew",
            family = "Van Hala",
            role = c("aut", "cre"),
            email = "matthew.vanhala@gmail.com")
-Description: A collection of helpful utility functions.
-    Examples include functions for rendering R Markdown documents in a
-    clean callr session, more flexible ways to save htmlwidgets, and
-    function for detecting dependencies in a package and adding them to
-    the DESCRIPTION file.
+Description: A collection of helpful utility functions.  Examples include
+    functions for rendering R Markdown documents in a clean callr session,
+    more flexible ways to save htmlwidgets, and function for detecting
+    dependencies in a package and adding them to the DESCRIPTION file.
 License: GPL-3
 URL: https://github.com/mvanhala/rutils
 BugReports: https://github.com/mvanhala/rutils/issues

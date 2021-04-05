@@ -22,6 +22,8 @@
 #' @param output_basedir Base output directory. Can also specify `GitHub` or `GitLab`, in which case
 #' the folder will be the `docs` or `public` directory, respectively.
 #' @param output_file Output filename
+#' @param output_dir Directly specify the output directory. If specified, takes precedence over
+#' `output_basedir`.
 #' @param params Parameters in the R Markdown document to execute
 #' @param open Whether to open the output document using [rstudioapi::viewer]
 #' @param ... Additional arguments passed to [rmarkdown::render]
@@ -30,6 +32,7 @@ render_doc <- function(input,
                        input_basedir = fs::path(rprojroot::find_rstudio_root_file(), "code"),
                        output_basedir = "gitlab",
                        output_file = fs::path_ext_set(fs::path_file(input), "html"),
+                       output_dir = NULL,
                        params = NULL,
                        open = FALSE,
                        ...) {
@@ -50,7 +53,12 @@ render_doc <- function(input,
   output_basedir <- path_reg(output_basedir)
   output_file <- fs::path_file(output_file)
 
-  output_dir <- fs::path(output_basedir, fs::path_rel(fs::path_dir(input), input_basedir))
+  output_dir <- output_dir %||% fs::path(output_basedir, fs::path_rel(fs::path_dir(input), input_basedir))
+  output_dir <- fs::path_norm(output_dir)
+  if (!identical(output_dir, fs::path_abs(output_dir))) {
+    output_dir <- fs::path(rprojroot::find_rstudio_root_file(), output_dir)
+  }
+
   fs::dir_create(output_dir)
   output_file <- fs::path(output_dir, output_file)
 
