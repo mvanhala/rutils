@@ -7,7 +7,7 @@
 render_doc(
   input,
   input_basedir = fs::path(rprojroot::find_rstudio_root_file(), "code"),
-  output_basedir = "gitlab",
+  output_basedir = fs::path(rprojroot::find_rstudio_root_file(), "output"),
   output_file = fs::path_ext_set(fs::path_file(input), "html"),
   output_dir = NULL,
   params = NULL,
@@ -20,8 +20,7 @@ render_doc(
 
 \item{input_basedir}{Base input directory (\code{code} by default)}
 
-\item{output_basedir}{Base output directory. Can also specify \code{GitHub} or \code{GitLab}, in which case
-the folder will be the \code{docs} or \code{public} directory, respectively.}
+\item{output_basedir}{Base output directory. (\code{output} by default)}
 
 \item{output_file}{Output filename}
 
@@ -44,7 +43,7 @@ specifically an RStudio project. The output file will be saved at the
 same location relative to \code{output_basedir} as \code{input} is
 relative to \code{input_basedir}. For example, using the defaults,
 if the input file is \code{code/folder1/folder2/report.Rmd}, the
-output file will be saved to \code{output/folder1/folder2/report.Rmd}.
+output file will be saved to \code{output/folder1/folder2/report.html}.
 The user may select base input and output directories, relative
 to which the paths are computed.
 

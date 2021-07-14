@@ -8,7 +8,7 @@
 #' same location relative to `output_basedir` as `input` is
 #' relative to `input_basedir`. For example, using the defaults,
 #' if the input file is `code/folder1/folder2/report.Rmd`, the
-#' output file will be saved to `output/folder1/folder2/report.Rmd`.
+#' output file will be saved to `output/folder1/folder2/report.html`.
 #' The user may select base input and output directories, relative
 #' to which the paths are computed.
 #'
@@ -19,8 +19,7 @@
 #'
 #' @param input Input file
 #' @param input_basedir Base input directory (`code` by default)
-#' @param output_basedir Base output directory. Can also specify `GitHub` or `GitLab`, in which case
-#' the folder will be the `docs` or `public` directory, respectively.
+#' @param output_basedir Base output directory. (`output` by default)
 #' @param output_file Output filename
 #' @param output_dir Directly specify the output directory. If specified, takes precedence over
 #' `output_basedir`.
@@ -30,7 +29,7 @@
 #' @export
 render_doc <- function(input,
                        input_basedir = fs::path(rprojroot::find_rstudio_root_file(), "code"),
-                       output_basedir = "gitlab",
+                       output_basedir = fs::path(rprojroot::find_rstudio_root_file(), "output"),
                        output_file = fs::path_ext_set(fs::path_file(input), "html"),
                        output_dir = NULL,
                        params = NULL,
@@ -39,14 +38,6 @@ render_doc <- function(input,
   checkmate::assert_file_exists(input)
   checkmate::assert_directory_exists(input_basedir)
   checkmate::assert_flag(open)
-
-  if (tolower(output_basedir) == "github") {
-    output_basedir <- fs::path(rprojroot::find_rstudio_root_file(), "docs")
-  }
-
-  if (tolower(output_basedir) == "gitlab") {
-    output_basedir <- fs::path(rprojroot::find_rstudio_root_file(), "public")
-  }
 
   input <- path_reg(input)
   input_basedir <- path_reg(input_basedir)
