@@ -24,7 +24,8 @@
 #' For example, for input `code/folder1/report.Rmd`, the default `input_basedir`
 #' will be `code`.
 #' @param output_basedir Base output directory (default takes from the option
-#' `rutils.render.output_basedir`, which is `output` by default)
+#' `rutils.render.output_basedir`, which is `output` by default). This should be
+#' expressed relative to the root directory.
 #' @param output_dir Directly specify the output directory.
 #' If specified, takes precedence over `output_basedir`.
 #' @param output_file Optional, the filename of the output file(s).
@@ -101,7 +102,6 @@ render_doc <- function(input,
     )
   }
 
-  checkmate::assert_string(output_basedir)
   checkmate::assert_string(output_dir, null.ok = TRUE)
   checkmate::assert_string(output_file, null.ok = TRUE)
   checkmate::assert_character(output_format, unique = TRUE, null.ok = TRUE)
@@ -118,6 +118,13 @@ render_doc <- function(input,
   )
 
   if (is.null(output_dir)) {
+    checkmate::assert_string(output_basedir)
+    output_basedir <- fs::path_norm(fs::path_expand(output_basedir))
+    checkmate::assert(
+      fs::path_has_parent(output_basedir, root_dir),
+      .var.name = "output_basedir must be child of root"
+    )
+
     if (is.null(input_basedir)) {
       input_rel_root <- fs::path_rel(input, root_dir)
       input_parts <- fs::path_split(input_rel_root)[[1]]
@@ -129,7 +136,6 @@ render_doc <- function(input,
     }
     input_basedir <- path_canonical(input_basedir)
     input_rel_base <- fs::path_rel(input, input_basedir)
-    output_basedir <- path_canonical(output_basedir)
     output_dir <- fs::path(root_dir, output_basedir, fs::path_dir(input_rel_base))
   } else {
     output_dir <- fs::path_norm(fs::path_expand(output_dir))

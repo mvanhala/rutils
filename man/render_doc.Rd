@@ -26,7 +26,8 @@ For example, for input \code{code/folder1/report.Rmd}, the default \code{input_b
 will be \code{code}.}
 
 \item{output_basedir}{Base output directory (default takes from the option
-\code{rutils.render.output_basedir}, which is \code{output} by default)}
+\code{rutils.render.output_basedir}, which is \code{output} by default). This should be
+expressed relative to the root directory.}
 
 \item{output_dir}{Directly specify the output directory.
 If specified, takes precedence over \code{output_basedir}.}
