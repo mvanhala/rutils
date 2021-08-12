@@ -73,7 +73,7 @@ callr" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rutils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -87,6 +87,9 @@ callr" />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -121,12 +124,14 @@ callr" />
 
     <pre class="usage"><span class='fu'>render_doc</span><span class='op'>(</span>
   <span class='va'>input</span>,
-  input_basedir <span class='op'>=</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='http://fs.r-lib.org/reference/path.html'>path</a></span><span class='op'>(</span><span class='fu'>rprojroot</span><span class='fu'>::</span><span class='fu'><a href='https://rprojroot.r-lib.org//reference/find_root_file.html'>find_rstudio_root_file</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"code"</span><span class='op'>)</span>,
-  output_basedir <span class='op'>=</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='http://fs.r-lib.org/reference/path.html'>path</a></span><span class='op'>(</span><span class='fu'>rprojroot</span><span class='fu'>::</span><span class='fu'><a href='https://rprojroot.r-lib.org//reference/find_root_file.html'>find_rstudio_root_file</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"output"</span><span class='op'>)</span>,
-  output_file <span class='op'>=</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='http://fs.r-lib.org/reference/path_file.html'>path_ext_set</a></span><span class='op'>(</span><span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='http://fs.r-lib.org/reference/path_file.html'>path_file</a></span><span class='op'>(</span><span class='va'>input</span><span class='op'>)</span>, <span class='st'>"html"</span><span class='op'>)</span>,
+  input_basedir <span class='op'>=</span> <span class='cn'>NULL</span>,
+  output_basedir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"rutils.render.output_basedir"</span><span class='op'>)</span>,
   output_dir <span class='op'>=</span> <span class='cn'>NULL</span>,
+  output_file <span class='op'>=</span> <span class='cn'>NULL</span>,
+  output_formats <span class='op'>=</span> <span class='cn'>NULL</span>,
   params <span class='op'>=</span> <span class='cn'>NULL</span>,
   open <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  root <span class='op'>=</span> <span class='fu'>rprojroot</span><span class='fu'>::</span><span class='va'><a href='https://rprojroot.r-lib.org//reference/criteria.html'>is_git_root</a></span> <span class='op'>|</span> <span class='fu'>rprojroot</span><span class='fu'>::</span><span class='va'><a href='https://rprojroot.r-lib.org//reference/criteria.html'>is_rstudio_project</a></span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -139,20 +144,57 @@ callr" />
     </tr>
     <tr>
       <th>input_basedir</th>
-      <td><p>Base input directory (<code>code</code> by default)</p></td>
+      <td><p>Base input directory (optional). If not specified,
+will be the first subfolder of the input file within the root directory.
+For example, for input <code>code/folder1/report.Rmd</code>, the default <code>input_basedir</code>
+will be <code>code</code>.</p></td>
     </tr>
     <tr>
       <th>output_basedir</th>
-      <td><p>Base output directory. (<code>output</code> by default)</p></td>
-    </tr>
-    <tr>
-      <th>output_file</th>
-      <td><p>Output filename</p></td>
+      <td><p>Base output directory (default takes from the option
+<code>rutils.render.output_basedir</code>, which is <code>output</code> by default). This should be
+expressed relative to the root directory.</p></td>
     </tr>
     <tr>
       <th>output_dir</th>
-      <td><p>Directly specify the output directory. If specified, takes precedence over
-<code>output_basedir</code>.</p></td>
+      <td><p>Directly specify the output directory.
+If specified, takes precedence over <code>output_basedir</code>.</p></td>
+    </tr>
+    <tr>
+      <th>output_file</th>
+      <td><p>Optional, the filename of the output file(s).
+If not provided, the default is the input filename.
+Any directory part of <code>output_file</code> will be removed.
+Only the filename part will be used.
+The output directory is specified using <code>output_basedir</code> or <code>output_dir</code>.
+Can be provided with or without an extension.
+The extension will be removed and replaced with the extension
+determined by <code>output_formats</code>.</p></td>
+    </tr>
+    <tr>
+      <th>output_formats</th>
+      <td><p>Optional, a vector of output file formats to which to render.
+If not provided, <code>html_document</code> is the default.</p>
+<p>All available R Markdown
+<a href='https://bookdown.org/yihui/rmarkdown/output-formats.html'>output formats</a>
+are supported.
+In parentheses, the extensions file extensions that will be created are specified.
+For example, the format <code>github_document</code> will be saved <code>output_file.github.md</code>;
+the format <code>html_document</code> will be saved as <code>output_file.html</code>.</p><ul>
+<li><p>beamer_presentation (.beamer.pdf)</p></li>
+<li><p>context_document (.context.pdf)</p></li>
+<li><p>github_document (.github.md)</p></li>
+<li><p>html_document (.html)</p></li>
+<li><p>ioslides_presentation (.ioslides.html)</p></li>
+<li><p>latex_document (.tex)</p></li>
+<li><p>md_document (.md)</p></li>
+<li><p>odt_document (.odt)</p></li>
+<li><p>pdf_document (.pdf)</p></li>
+<li><p>powerpoint_presentation (.pptx)</p></li>
+<li><p>rtf_document (.rtf)</p></li>
+<li><p>slidy_presentation (.slidy.html)</p></li>
+<li><p>word_document (.docx)</p></li>
+</ul></td>
     </tr>
     <tr>
       <th>params</th>
@@ -161,6 +203,11 @@ callr" />
     <tr>
       <th>open</th>
       <td><p>Whether to open the output document using <a href='https://rdrr.io/pkg/rstudioapi/man/viewer.html'>rstudioapi::viewer</a></p></td>
+    </tr>
+    <tr>
+      <th>root</th>
+      <td><p>Root criterion using a specification from <a href='https://rprojroot.r-lib.org//reference/root_criterion.html'>rprojroot::root_criterion</a>.
+Determines the root folder.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -177,10 +224,15 @@ relative to <code>input_basedir</code>. For example, using the defaults,
 if the input file is <code>code/folder1/folder2/report.Rmd</code>, the
 output file will be saved to <code>output/folder1/folder2/report.html</code>.
 The user may select base input and output directories, relative
-to which the paths are computed.</p>
+to which the paths are computed. The user may also directly
+specify the output directory if preferred.</p>
 <p>To use this function in a R Markdown document, you can place the following
 line in the YAML header:</p>
 <p><code>knit: (function(inputFile, encoding) rutils::render_doc(inputFile))</code></p>
+<p>If rendering to multiple formats, keep in mind that the R code is executed
+again for each format, as <a href='https://stackoverflow.com/a/64603044'>noted here</a>.
+Therefore, for documents that take a lengthy period of time to run,
+it may not preferable to render to multiple formats.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

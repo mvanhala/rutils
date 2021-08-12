@@ -6,5 +6,5 @@ NULL
 #' @export %||%
 NULL
 
-path_reg <- function(path) fs::path_abs(fs::path_norm(path))
+path_canonical <- function(path) fs::path_abs(fs::path_norm(fs::path_expand(path)))
 

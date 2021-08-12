@@ -6,30 +6,72 @@
 \usage{
 render_doc(
   input,
-  input_basedir = fs::path(rprojroot::find_rstudio_root_file(), "code"),
-  output_basedir = fs::path(rprojroot::find_rstudio_root_file(), "output"),
-  output_file = fs::path_ext_set(fs::path_file(input), "html"),
+  input_basedir = NULL,
+  output_basedir = getOption("rutils.render.output_basedir"),
   output_dir = NULL,
+  output_file = NULL,
+  output_formats = NULL,
   params = NULL,
   open = FALSE,
+  root = rprojroot::is_git_root | rprojroot::is_rstudio_project,
   ...
 )
 }
 \arguments{
 \item{input}{Input file}
 
-\item{input_basedir}{Base input directory (\code{code} by default)}
+\item{input_basedir}{Base input directory (optional). If not specified,
+will be the first subfolder of the input file within the root directory.
+For example, for input \code{code/folder1/report.Rmd}, the default \code{input_basedir}
+will be \code{code}.}
 
-\item{output_basedir}{Base output directory. (\code{output} by default)}
+\item{output_basedir}{Base output directory (default takes from the option
+\code{rutils.render.output_basedir}, which is \code{output} by default). This should be
+expressed relative to the root directory.}
 
-\item{output_file}{Output filename}
+\item{output_dir}{Directly specify the output directory.
+If specified, takes precedence over \code{output_basedir}.}
 
-\item{output_dir}{Directly specify the output directory. If specified, takes precedence over
-\code{output_basedir}.}
+\item{output_file}{Optional, the filename of the output file(s).
+If not provided, the default is the input filename.
+Any directory part of \code{output_file} will be removed.
+Only the filename part will be used.
+The output directory is specified using \code{output_basedir} or \code{output_dir}.
+Can be provided with or without an extension.
+The extension will be removed and replaced with the extension
+determined by \code{output_formats}.}
+
+\item{output_formats}{Optional, a vector of output file formats to which to render.
+If not provided, \code{html_document} is the default.
+
+All available R Markdown
+\href{https://bookdown.org/yihui/rmarkdown/output-formats.html}{output formats}
+are supported.
+In parentheses, the extensions file extensions that will be created are specified.
+For example, the format \code{github_document} will be saved \code{output_file.github.md};
+the format \code{html_document} will be saved as \code{output_file.html}.
+\itemize{
+\item beamer_presentation (.beamer.pdf)
+\item context_document (.context.pdf)
+\item github_document (.github.md)
+\item html_document (.html)
+\item ioslides_presentation (.ioslides.html)
+\item latex_document (.tex)
+\item md_document (.md)
+\item odt_document (.odt)
+\item pdf_document (.pdf)
+\item powerpoint_presentation (.pptx)
+\item rtf_document (.rtf)
+\item slidy_presentation (.slidy.html)
+\item word_document (.docx)
+}}
 
 \item{params}{Parameters in the R Markdown document to execute}
 
 \item{open}{Whether to open the output document using \link[rstudioapi:viewer]{rstudioapi::viewer}}
+
+\item{root}{Root criterion using a specification from \link[rprojroot:root_criterion]{rprojroot::root_criterion}.
+Determines the root folder.}
 
 \item{...}{Additional arguments passed to \link[rmarkdown:render]{rmarkdown::render}}
 }
@@ -45,10 +87,16 @@ relative to \code{input_basedir}. For example, using the defaults,
 if the input file is \code{code/folder1/folder2/report.Rmd}, the
 output file will be saved to \code{output/folder1/folder2/report.html}.
 The user may select base input and output directories, relative
-to which the paths are computed.
+to which the paths are computed. The user may also directly
+specify the output directory if preferred.
 
 To use this function in a R Markdown document, you can place the following
 line in the YAML header:
 
 \code{knit: (function(inputFile, encoding) rutils::render_doc(inputFile))}
+
+If rendering to multiple formats, keep in mind that the R code is executed
+again for each format, as \href{https://stackoverflow.com/a/64603044}{noted here}.
+Therefore, for documents that take a lengthy period of time to run,
+it may not preferable to render to multiple formats.
 }
