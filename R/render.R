@@ -129,7 +129,7 @@ render_doc <- function(input,
     }
     input_basedir <- path_reg(input_basedir)
     input_rel_base <- fs::path_rel(input, input_basedir)
-    output_dir <- fs::path(root_dir, output_basedir, fs::path_dir(input_dir_rel_base))
+    output_dir <- fs::path(root_dir, output_basedir, fs::path_dir(input_rel_base))
   }
 
   output_dir <- path_reg(output_dir)
