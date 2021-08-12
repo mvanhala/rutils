@@ -109,7 +109,7 @@ render_doc <- function(input,
   checkmate::assert_flag(open)
   checkmate::assert_class(root, "root_criterion")
 
-  input <- path_reg(input)
+  input <- path_canonical(input)
   input_file <- fs::path_file(input)
 
   root_dir <- tryCatch(
@@ -127,12 +127,18 @@ render_doc <- function(input,
         input_basedir <- root_dir
       }
     }
-    input_basedir <- path_reg(input_basedir)
+    input_basedir <- path_canonical(input_basedir)
     input_rel_base <- fs::path_rel(input, input_basedir)
+    output_basedir <- path_canonical(output_basedir)
     output_dir <- fs::path(root_dir, output_basedir, fs::path_dir(input_rel_base))
+  } else {
+    output_dir <- fs::path_norm(fs::path_expand(output_dir))
+    if (!identical(output_dir, fs::path_abs(output_dir))) {
+      output_dir <- fs::path(root_dir, output_dir)
+    }
   }
 
-  output_dir <- path_reg(output_dir)
+  output_dir <- path_canonical(output_dir)
 
   if (is.null(output_file)) output_file <- input
   if (is.null(output_format)) output_format <- "html_document"
