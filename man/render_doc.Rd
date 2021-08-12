@@ -10,7 +10,7 @@ render_doc(
   output_basedir = getOption("rutils.render.output_basedir"),
   output_dir = NULL,
   output_file = NULL,
-  output_format = NULL,
+  output_formats = NULL,
   params = NULL,
   open = FALSE,
   root = rprojroot::is_git_root | rprojroot::is_rstudio_project,
@@ -38,9 +38,10 @@ Any directory part of \code{output_file} will be removed.
 Only the filename part will be used.
 The output directory is specified using \code{output_basedir} or \code{output_dir}.
 Can be provided with or without an extension.
-The extension will be removed and replaced with that determined by \code{output_format}.}
+The extension will be removed and replaced with the extension
+determined by \code{output_formats}.}
 
-\item{output_format}{Optional, a vector of output file formats to which to render.
+\item{output_formats}{Optional, a vector of output file formats to which to render.
 If not provided, \code{html_document} is the default.
 
 All available R Markdown
@@ -93,4 +94,9 @@ To use this function in a R Markdown document, you can place the following
 line in the YAML header:
 
 \code{knit: (function(inputFile, encoding) rutils::render_doc(inputFile))}
+
+If rendering to multiple formats, keep in mind that the R code is executed
+again for each format, as \href{https://stackoverflow.com/a/64603044}{noted here}.
+Therefore, for documents that take a lengthy period of time to run,
+it may not preferable to render to multiple formats.
 }

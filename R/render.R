@@ -18,6 +18,11 @@
 #'
 #' `knit: (function(inputFile, encoding) rutils::render_doc(inputFile))`
 #'
+#' If rendering to multiple formats, keep in mind that the R code is executed
+#' again for each format, as [noted here](https://stackoverflow.com/a/64603044).
+#' Therefore, for documents that take a lengthy period of time to run,
+#' it may not preferable to render to multiple formats.
+#'
 #' @param input Input file
 #' @param input_basedir Base input directory (optional). If not specified,
 #' will be the first subfolder of the input file within the root directory.
@@ -34,8 +39,9 @@
 #' Only the filename part will be used.
 #' The output directory is specified using `output_basedir` or `output_dir`.
 #' Can be provided with or without an extension.
-#' The extension will be removed and replaced with that determined by `output_format`.
-#' @param output_format Optional, a vector of output file formats to which to render.
+#' The extension will be removed and replaced with the extension
+#' determined by `output_formats`.
+#' @param output_formats Optional, a vector of output file formats to which to render.
 #' If not provided, `html_document` is the default.
 #'
 #' All available R Markdown
@@ -70,7 +76,7 @@ render_doc <- function(input,
                        output_basedir = getOption("rutils.render.output_basedir"),
                        output_dir = NULL,
                        output_file = NULL,
-                       output_format = NULL,
+                       output_formats = NULL,
                        params = NULL,
                        open = FALSE,
                        root = rprojroot::is_git_root | rprojroot::is_rstudio_project,
@@ -104,8 +110,8 @@ render_doc <- function(input,
 
   checkmate::assert_string(output_dir, null.ok = TRUE)
   checkmate::assert_string(output_file, null.ok = TRUE)
-  checkmate::assert_character(output_format, unique = TRUE, null.ok = TRUE)
-  checkmate::assert_subset(output_format, names(formats))
+  checkmate::assert_character(output_formats, unique = TRUE, null.ok = TRUE)
+  checkmate::assert_subset(output_formats, names(formats))
   checkmate::assert_flag(open)
   checkmate::assert_class(root, "root_criterion")
 
@@ -147,11 +153,11 @@ render_doc <- function(input,
   output_dir <- path_canonical(output_dir)
 
   if (is.null(output_file)) output_file <- input
-  if (is.null(output_format)) output_format <- "html_document"
+  if (is.null(output_formats)) output_formats <- "html_document"
 
   output_files <- fs::path_ext_set(
-    rep(fs::path_file(output_file), length(output_format)),
-    formats[output_format]
+    rep(fs::path_file(output_file), length(output_formats)),
+    formats[output_formats]
   )
   output_files <- fs::path(output_dir, output_files)
 
@@ -170,7 +176,7 @@ render_doc <- function(input,
     },
     args = list(
       input = input,
-      output_format = output_format,
+      output_format = output_formats,
       output_file = output_files,
       params = params,
       ...
@@ -180,8 +186,8 @@ render_doc <- function(input,
 
   if (open &&
       rstudioapi::isAvailable(version_needed = "1.3", child_ok = TRUE) &&
-      any(output_format == "html_document")) {
-    try(rstudioapi::viewer(output_files[which(output_format == "html_document")]))
+      any(output_formats == "html_document")) {
+    try(rstudioapi::viewer(output_files[which(output_formats == "html_document")]))
   }
 
   invisible(output_files)
