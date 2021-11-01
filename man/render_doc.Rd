@@ -14,6 +14,8 @@ render_doc(
   params = NULL,
   open = FALSE,
   root = rprojroot::is_git_root | rprojroot::is_rstudio_project,
+  stdout = NULL,
+  stderr = NULL,
   ...
 )
 }

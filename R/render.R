@@ -80,6 +80,8 @@ render_doc <- function(input,
                        params = NULL,
                        open = FALSE,
                        root = rprojroot::is_git_root | rprojroot::is_rstudio_project,
+                       stdout = NULL,
+                       stderr = NULL,
                        ...) {
   formats <- c(
     "context_document" = ".context.pdf",
@@ -181,7 +183,9 @@ render_doc <- function(input,
       params = params,
       ...
     ),
-    show = TRUE
+    show = TRUE,
+    stdout = stdout,
+    stderr = stderr
   )
 
   if (open &&
