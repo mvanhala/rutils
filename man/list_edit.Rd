@@ -4,12 +4,14 @@
 \alias{list_edit}
 \title{Edit a list}
 \usage{
-list_edit(.l, ...)
+list_edit(.l, ..., .add = TRUE)
 }
 \arguments{
 \item{.l}{List to edit}
 
 \item{...}{Named elements to add or delete}
+
+\item{.add}{Should named elements not existing in the original list be added?}
 }
 \description{
 Edit the elements of a list by name
@@ -24,4 +26,5 @@ Elements can be removed by setting them equal to \code{NULL}.
 list_edit(list(x = 1, y = 2), x = 10, z = 20)
 list_edit(list(x = 1, y = 2), x = NULL, y = 5)
 list_edit(list(x = 1, y = 2), !!!list(x = NULL, z = 100))
+list_edit(list(x = 1, y = 2), x = 10, z = 20, .add = FALSE)
 }
